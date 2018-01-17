@@ -9,10 +9,18 @@
 \setbeamertemplate{headline}{%
 %	\vspace{-44pt}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{textblock*}{4cm}[1,0](0.995\textwidth,0pt)  %(.7\textwidth,-1.5cm)
-	\includegraphics[width=4cm,keepaspectratio]
-	{images/HS-Logo-aktuell-CMYK-eps-converted-to.pdf}
-\end{textblock*}
+%\begin{textblock*}{4cm}[1,0](0.995\textwidth,0pt)  %(.7\textwidth,-1.5cm)
+%	\includegraphics[width=4cm,keepaspectratio]
+%	{images/HS-Logo-aktuell-CMYK-eps-converted-to.pdf}
+%\end{textblock*}
+
+% better solution:
+\begin{tikzpicture} [overlay,remember picture]
+	\node [anchor=north east] at (current page.north east){
+		\includegraphics[width=4cm,keepaspectratio] 
+		{images/HS-Logo-aktuell-CMYK-eps-converted-to.pdf}
+	};
+\end{tikzpicture}
 } 
   
 %
@@ -22,7 +30,7 @@
 \setbeamertemplate{frametitle}{%
 	\color{dd-gray}
  	\nointerlineskip
- 	\vskip1.6\baselineskip 
+ 	\vskip1.5\baselineskip 
  	\usebeamerfont{frametitle}\insertframetitle\strut
  	\vskip0\baselineskip%
  	%%%-       
@@ -114,31 +122,37 @@
 	\else
 	{%
 		\setbeamertemplate{headline}{}
-%		\setbeamercolor{footline}{fg=black}
-%		\addtobeamertemplate{footline}{%
-%			\colorlet{dd-gray}{white}
-%		}{}
 		\usebackgroundtemplate{%
 			\begin{tikzpicture}
-			\node[xshift=0cm,yshift=0cm] at (current page.south west) {
-				\includegraphics[height=1cm, keepaspectratio]
-				{images/DLR_Logo.png}
-			};
 			\useasboundingbox (0,-\headheight) rectangle (0,-\headheight);
 			\draw[red](0pt,1pt) rectangle (\paperwidth,-\paperheight);
-			\fill (0,1pt) rectangle (\paperwidth,-\paperheight) [dd-gray];
+			\fill (0,1pt) rectangle (\paperwidth,-\paperheight) [dd-gray, opacity=0.8];
 			\fill (-39:20.0cm) circle    (17.1cm)  [white];
 			\fill (+19:17.1cm) circle    (17.1cm)  [white];
+			%%%
 			\begin{scope}                                                  % Begin scope for...
 %			\clip (4.2cm,13.7cm) circle    (16.9cm);
 			\clip (+19:17.1cm) circle    (17.0cm);
-			\node[inner sep=0mm] at (0.6\paperwidth,-16mm+1pt) {
+			%%%
+			\node[anchor=center, inner sep=0pt]  
+				at (0.61\paperwidth,-16mm+1pt)  
+			{
 				\includegraphics[height=3.5cm, keepaspectratio]
 					{images/HS-Logo-aktuell-CMYK-eps-converted-to.pdf}
 			};
+			%%%                          
+			\node[opacity=0.6, anchor=north west, inner sep=0pt] 
+				at (0.04\paperwidth, -3mm+1pt)   % at (current page.south west) 
+			{
+				\includegraphics[height=1.5cm, keepaspectratio]
+				{images/DLR_Logo.png}
+			};
 			\end{scope}   
-			\end{tikzpicture}  
+			%%%         
+			\end{tikzpicture}
+			
 		}%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		\begin{frame}%[plain]
 			\vspace{2cm}
 			\titlepage
