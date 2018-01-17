@@ -1,0 +1,153 @@
+\NeedsTeXFormat{LaTeX2e}
+% Load key/value package
+\RequirePackage{xkeyval}
+\RequirePackage{ifthen} 
+
+%
+% Headline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{headline}{%
+%	\vspace{-44pt}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{textblock*}{4cm}[1,0](0.995\textwidth,0pt)  %(.7\textwidth,-1.5cm)
+	\includegraphics[width=4cm,keepaspectratio]
+	{images/HS-Logo-aktuell-CMYK-eps-converted-to.pdf}
+\end{textblock*}
+} 
+  
+%
+% Change Frametitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamertemplate{frametitle}{%
+	\color{dd-gray}
+ 	\nointerlineskip
+ 	\vskip1.6\baselineskip 
+ 	\usebeamerfont{frametitle}\insertframetitle\strut
+ 	\vskip0\baselineskip%
+ 	%%%-       
+ 	\color{dark-gray}
+ 	\nointerlineskip
+ 	\noindent\makebox[\linewidth]{\rule{\paperwidth}{1.2pt}}
+ 	%%%
+% 	\color{dd-gray}
+% 	\usebeamerfont{framesubtitle}\insertframesubtitle\strut
+} 
+
+	
+%
+% Footline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{footline}{%
+	%%%
+	\color{dark-gray}
+	\nointerlineskip
+	\noindent\makebox[\paperwidth]{\rule{\paperwidth}{1.2pt}}
+	%%%
+	\vskip+.5\baselineskip%
+	\leavevmode% In vertical mode, TeX stacks horizontal boxes vertically, whereas in horizontal mode, they are taken as part of the text line.
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{date in head/foot}
+			\color{dd-gray}
+			\insertshortinstitute
+		\end{beamercolorbox}%
+	
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{author in head/foot}
+			\color{dd-gray}
+			\insertshortauthor 
+		\end{beamercolorbox}%
+	
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+			\usebeamerfont{date in head/foot}
+			\color{dd-gray}
+			\insertframenumber{} % / \inserttotalframenumber
+			\hspace*{2em}
+		\end{beamercolorbox}%
+	}% 
+	\vskip+.5\baselineskip%
+}
+	
+	
+
+
+%
+% Titelpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{tikz}
+%\setbeamertemplate{title page}
+%{ 
+%%	\vbox{} % to 1.5cm 
+%%	{ 
+%%	\begin{centering}
+%%		\begin{beamercolorbox}[sep=8pt,center]{title}
+%%			\usebeamerfont{title}\inserttitle\par%
+%%			\ifx\insertsubtitle\@empty%
+%%			\else%
+%%			\vskip0.25em%
+%%			{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+%%			\fi%     
+%%		\end{beamercolorbox}% 
+%%		\vskip1em\par
+%%		\begin{beamercolorbox}[sep=8pt,center]{author}
+%%			\usebeamerfont{author}\insertauthor
+%%		\end{beamercolorbox}
+%%		\vskip0.5em\par
+%%		\begin{beamercolorbox}[sep=8pt,center]{institute}
+%%			\usebeamerfont{institute}\insertinstitute
+%%		\end{beamercolorbox}
+%%		\begin{beamercolorbox}[sep=8pt,center]{date}
+%%			\usebeamerfont{date}\insertdate
+%%		\end{beamercolorbox}%\vskip0.5em
+%%	\end{centering}
+%%	%\vfill
+%}
+
+
+
+% Define titlepage background
+\renewcommand{\maketitle}{
+	\ifbeamer@inframe
+	\PackageWarningNoLine{beamerthemeRosenheim}{Title page must be inserted using maketitle outside a frame}
+	\titlepage
+	\else
+	{%
+		\setbeamertemplate{headline}{}
+%		\setbeamercolor{footline}{fg=black}
+%		\addtobeamertemplate{footline}{%
+%			\colorlet{dd-gray}{white}
+%		}{}
+		\usebackgroundtemplate{%
+			\begin{tikzpicture}
+			\node[xshift=0cm,yshift=0cm] at (current page.south west) {
+				\includegraphics[height=1cm, keepaspectratio]
+				{images/DLR_Logo.png}
+			};
+			\useasboundingbox (0,-\headheight) rectangle (0,-\headheight);
+			\draw[red](0pt,1pt) rectangle (\paperwidth,-\paperheight);
+			\fill (0,1pt) rectangle (\paperwidth,-\paperheight) [dd-gray];
+			\fill (-39:20.0cm) circle    (17.1cm)  [white];
+			\fill (+19:17.1cm) circle    (17.1cm)  [white];
+			\begin{scope}                                                  % Begin scope for...
+%			\clip (4.2cm,13.7cm) circle    (16.9cm);
+			\clip (+19:17.1cm) circle    (17.0cm);
+			\node[inner sep=0mm] at (0.6\paperwidth,-16mm+1pt) {
+				\includegraphics[height=3.5cm, keepaspectratio]
+					{images/HS-Logo-aktuell-CMYK-eps-converted-to.pdf}
+			};
+			\end{scope}   
+			\end{tikzpicture}  
+		}%
+		\begin{frame}%[plain]
+			\vspace{2cm}
+			\titlepage
+			\vfill
+		\end{frame}
+}
+\fi
+}
+
+\endinput
+
+% eof

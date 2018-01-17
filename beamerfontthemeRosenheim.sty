@@ -1,0 +1,45 @@
+%
+% Select math font
+\RequirePackage{ifthen}
+
+\newboolean{beamer@fontthemedlr@2012@professionalfonts}
+\DeclareOptionBeamer{professionalfonts}[true]{\setboolean{beamer@fontthemedlr@2012@professionalfonts}{#1}}
+
+\newboolean{beamer@fontthemedlr@2012@helvetica}
+\DeclareOptionBeamer{helvetica}[true]{\setboolean{beamer@fontthemedlr@2012@helvetica}{#1}}
+
+\ExecuteOptionsBeamer{professionalfonts=false, helvetica=false}
+\ProcessOptionsBeamer
+
+
+%
+% Load math suff
+%%%%%%%%%%%%%%%%%%%%
+	\ifthenelse{\boolean{beamer@fontthemedlr@2012@professionalfonts}}{%
+		\usefonttheme{professionalfonts}}{%
+		\usefonttheme{default}
+		\RequirePackage{cmbright}
+		\AtBeginDocument{
+			\DeclareMathAlphabet{\mathup}{OT1}{\sfdefault}{m}{n}
+			\SetMathAlphabet{\mathup}{bold}{T1}{\sfdefault}{sb}{n}
+		\SetMathAlphabet{\mathcal}{bold}{OMS}{cmsy}{b}{n}}
+		\let\sum\relax
+		\DeclareMathOperator*{\sum}{\raisebox{-.35ex}{\scalebox{1.8}{$\upSigma$}}}
+		\let\prod\relax
+		\DeclareMathOperator*{\prod}{\raisebox{-.35ex}{\scalebox{1.8}{$\upPi$}}}
+		}
+
+% Execute the stuff
+\ifthenelse{\boolean{beamer@fontthemedlr@2012@helvetica}}{
+	\RequirePackage[scaled]{helvet}}{
+	\RequirePackage{frutiger}}
+	
+
+%
+% Defint fonts for TOC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamerfont{section in toc}{size=\large}
+
+\endinput
+
+% eof

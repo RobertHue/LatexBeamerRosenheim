@@ -1,0 +1,32 @@
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# makeidx
+*.idx
+*.ilg
+*.ind
+*.ist
+
+# backup and generated files:
+*.bak
+*.nav
+*.snm
+*.synctex.gz
