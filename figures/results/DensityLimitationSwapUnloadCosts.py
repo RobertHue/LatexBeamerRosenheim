@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from matplotlib import rcParams
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,9 +29,9 @@ legend = plt.legend(loc='best', fancybox=True, shadow=False, ncol=1, fontsize=12
 legend.get_frame().set_alpha(0.5)
 
 ##################### LABELS
-plt.xlabel('Cache-Kapazität c [kB]', fontsize=fontsize)
+plt.xlabel(u'Cache-Kapazität [kB]', fontsize=fontsize)
 plt.ylabel('Unloaded Bytes [MB]', fontsize=fontsize)
-plt.title('Vergleich der Kosten zum Entladen (Dichte-Limitierung)', fontsize=fontsize+2)
+#plt.title('Vergleich der Kosten zum Entladen (Dichte-Limitierung)', fontsize=fontsize+2)
 plt.grid(True)
 
 ### AXIS:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from matplotlib import rcParams
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,9 +29,9 @@ legend = plt.legend(loc='lower right', fancybox=True, shadow=False, ncol=1, font
 legend.get_frame().set_alpha(0.5)
 
 ##################### LABELS
-plt.xlabel('Cache-Kapazität c [kB]', fontsize=fontsize)
+plt.xlabel(u'Cache-Kapazität [kB]', fontsize=fontsize)
 plt.ylabel('Hit-Rate [%]', fontsize=fontsize)
-plt.title('Vergleich von Hit-Rate (Dichte-Limitierung)', fontsize=fontsize+2)
+# plt.title('Vergleich von Hit-Rate (Dichte-Limitierung)', fontsize=fontsize+2)
 plt.grid(True)
 
 ### AXIS:

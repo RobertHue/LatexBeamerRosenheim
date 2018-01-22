@@ -29,7 +29,7 @@
 
 % bibtex:  
 \usepackage[style=alphabetic,backend=biber]{biblatex}
-\addbibresource{../thesis.bib}
+\addbibresource{thesis.bib}
 \usepackage{csquotes}
 \usepackage{silence,lmodern}
 % Filter warnings issued by package biblatex starting with "Patching footnotes failed"
@@ -47,7 +47,7 @@
 
 \usepackage[table]{xcolor}    % loads also »colortbl«
 \usepackage{amsmath,amssymb}
-\usepackage{textpos}
+\usepackage[absolute,overlay]{textpos}
 \usepackage{tikz}
 \setbeamertemplate{navigation symbols}{}	%remove navigation symbols
 \setbeamertemplate{bibliography item}[text]
@@ -103,36 +103,46 @@
 \maketitle % never put this line in a frame environment
 
 \begin{frame}
-\frametitle{Motivation/Umfeld}
-
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-	\column{.7\textwidth} % Left column and width
-	% \textbf{Eigenschaften}
+\frametitle{Umfeld und Motivation}
+%
+%\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+%	\column{.7\textwidth} % Left column and width
+%	% \textbf{Eigenschaften}
 %%%%%%%%%%%%%%%%%%%%%%%
 	\begin{itemize}
-		\item Roboter sollen:
-		\begin{itemize} 
-			\item Hindernisse vermeiden
-			\item Unbekannte Umgebung erkunden
-			\item Objekte greifen
-		\end{itemize}
-		\item Wahrnehmung über Tiefenkameras
-		\item Registrierung -- Anwendungsfälle:
+%		\item Roboter sollen:
+%		\begin{itemize} 
+%			\item Hindernisse vermeiden
+%			\item Unbekannte Umgebung erkunden
+%			\item Objekte greifen
+%		\end{itemize}
+		\item Robotik -- Wahrnehmung über Tiefenkameras % Punktwolken kommen aus Tiefenkameras
+		\item Registrierung -- Anwendungsfälle: 
 		\begin{itemize}
-		\item Lokalisation
-		\item mehrere Scans zusammenführen
+			\item Zusammenführen zweier Datensätze % mehrere Scans zusammenführen
+			\item Lokalisation % von Sensordaten 
 		\end{itemize}
-		\item Lib3D-Framework (DLR-intern)
 	\end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%
-	\column{.3\textwidth} % Right column and width
-	\begin{figure}
+%	\column{.3\textwidth} % Right column and width
+	\begin{figure} 
 		\centering
-		\includegraphics[width=0.95\linewidth]{figures/introduction/Omnirob_dlr_version.jpg}
-		\caption{omniRob \cite{Buschor2013}} 
-		\label{fig:omnirob}
-	\end{figure}
-\end{columns} 
+		\begin{minipage}{.45\textwidth}
+			\centering
+			\includegraphics[width=0.90\linewidth]{figures/introduction/registration_outdoor.png}
+			\caption{Beispiel einer Registrierung \cite{PCLReg}}
+			\label{fig:RegistrierungB1}
+		\end{minipage}%
+	\hspace*{0.5cm}
+		\begin{minipage}{.45\textwidth} 
+			\centering
+			\includegraphics[width=0.90\linewidth]{figures/introduction/justin_localization.jpg}
+			\caption{Lokalisierung eines Roboters in einer bereits existierenden Karte}
+			\label{fig:Justin}
+		\end{minipage}
+		\label{fig:test}
+	\end{figure} 
+%\end{columns} 
 \end{frame} 
 
 % Überblick 
@@ -152,45 +162,30 @@
 		\item Vollständiges Halten der Daten im HSP nicht möglich
 		\item [$\Rightarrow$] Sinnvolles Auslagern nötig
 	\end{itemize}
-	\begin{figure}
-	\includegraphics[width=1\linewidth]{figures/introduction/registration_combined.png}
-	\caption{Beispiele großer Punktwolken (aus \cite{PCLReg})}
-	\end{figure} 
-\end{frame}
-
-\section{Lösungsansätze}
-\begin{frame}
-	\frametitle{Lösungsansätze}
-	\begin{figure} 
-		\centering
-		\begin{minipage}{.5\textwidth}
-			\centering
-			\includegraphics[width=0.90\linewidth]{figures/introduction/mot1.png}
-			\caption{(a) Auslagern alles hinter der Kamera liegend}
-			\label{fig:sub1}
-		\end{minipage}%
-		\begin{minipage}{.5\textwidth} 
-			\centering
-			\includegraphics[width=0.90\linewidth]{figures/introduction/mot2.png}
-			\caption{(b) Auslagern alles außerhalb eines bestimmten Radius}
-			\label{fig:sub2}
-		\end{minipage}
-	\label{fig:test} 
-\end{figure}
+%	\begin{figure}
+%	\includegraphics[width=0.8\linewidth]{figures/relatedWorks/FeatureEstimationProcessSimplifiedBetter.pdf}
+%	\caption{Teil des streambasierten Prozesses der Feature-Berechnung}
+%	\end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Lösungsansätze} 
+\frametitle{Lösungsansätze}
+\begin{textblock*}{4cm}(\paperwidth-4.8cm,2cm) % {block width} (coords)
+	\includegraphics[width=4cm,keepaspectratio]{figures/introduction/mot1}
+\end{textblock*}
+\vskip1\baselineskip
 \color{dd-gray} \textbf{Einsatz von } \color{black} 
 \begin{itemize}
+	\item[]
+	\item geometrischen Auslagerungsstrategien
+	\item[]
 	\item Caching-Strategien % Führen Statistik über Zugriffe/Zugriffsmuster
 \end{itemize}
-
-\color{dd-gray} \textbf{Anforderungen} \color{black} 
-\begin{itemize}
-\item Eine gute Cache-Hit-Rate erzielen
-\item Laufzeit- sowie Speichereffizient (wenig Overhead)
-\end{itemize}
+\vspace{0.3cm}
+\begin{figure}
+\includegraphics[width=0.7\linewidth]{figures/cache_concept}
+\end{figure} 
+\vskip1\baselineskip
 \end{frame}
 
 \section{Ziel der Arbeit}
@@ -198,13 +193,14 @@
 	\frametitle{Ziel der Arbeit} % + Was ist überhaupt ein Cache + Metrik um Caches zu vergleichen
 	\color{dd-gray} \textbf{Ziel:} \color{black} 
 	\begin{itemize}
-	\item Sinnvolles und effizientes Auslagern mithilfe bereits existierender Caching-Strategien
+	\item Sinnvolles und effizientes Auslagern mithilfe heuristischer Caching-Strategien
 	\end{itemize}
-	
+%%%
+	\vspace{0.3cm}
 	\color{dd-gray} \textbf{Dazu ist nötig:} \color{black} 
 	\begin{itemize} 
-	\item Einbringen der Strategien in den Registrierungs-Prozess \\ (Lib3D-Framework)  % Wo das Caching anzubringen ist?
-	\item Entscheidung was genau auszulagern ist \\ (siehe Extendable Octree)
+	\item Einbringen der Strategien in den Registrierungs-Prozess  % Wo das Caching anzubringen ist?
+	\item Entscheidung, was genau auszulagern ist
 	\end{itemize}
 \end{frame}
 
@@ -214,18 +210,42 @@
 
 \begin{frame}
 \frametitle{Caching-Strategien}
+\color{dd-gray} \textbf{Klassifizierung von Strategien:} \color{black} 
+\vspace{0.1cm}
 \begin{itemize}
-	\item Vermeidung einer Strategie, die eine offline Auswahl eines optimierbaren Parameters benötigt
+	\item Aktualitäts-basierende
+	\item Frequenz-basierende
+	\item Aktualitäts-/Frequenz-basierende (Hybride)
+	\item Funktions-basierende
 \end{itemize}
+%%%
+	\vspace{0.3cm}
+	\color{dd-gray} \textbf{Anforderungen} \color{black} 
+	\begin{itemize}
+	\item Eine gute Cache-Hit-Rate erzielen
+	\item Laufzeit- sowie Speichereffizient (wenig Overhead) 
+	\end{itemize}
+%\vspace{0.3cm}
+%\color{dd-gray} \textbf{Auswahlkriterien:} \color{black} 
+%\vspace{0.1cm}
+%\begin{itemize}
+%	\item Vermeidung einer Strategie, die eine offline Auswahl eines optimierbaren Parameters benötigt
+%	\item Entscheidung fiel auf Strategien mit konstanter Komplexität. Keine Warteschlangen mit O(2)
+%\end{itemize}
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Least Recently Used (LRU)}
-Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen wurde. \\
+Verdrängt das Element, welches am ältesten ist. \\
 \vspace{0.3cm}
 % Basiert auf zeitlicher Lokalität
 
+\color{dd-gray} \textbf{Datenstruktur:} \color{black} 
+\begin{figure}
+	\includegraphics[width=0.6\linewidth]{figures/caches/lru}
+\end{figure} 
+\vskip0\baselineskip%
 %\note{ 
 %	Nutzt die zeitliche 
 %	limitiert sich selbst nur an der Information der Zeit der Referenz... (zu wenig Infos die es verwendet)
@@ -234,7 +254,6 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 %	Zu wenig infos: Einfach die Zeit des letzten Zugriffs implizit gespeichert durch die Position im einer Queue 
 %	Basiert auf zeitliche Lokalität. Dh. Sehr gut für zeitlich geclusterte Zugriffsmuster.
 %}  
-\vspace{0.3cm}
 %\pause
 \color{dd-gray} \textbf{Vorteile} \color{black} 
 \begin{itemize}%[<+->]
@@ -251,11 +270,13 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 
 \begin{frame}
 \frametitle{Adaptive Replacement Cache (ARC)}
+Passt seine Gewichtung zwischen Aktualität und Häufigkeiten von Elementzugriffen dynamisch an.\\
+\vspace{0.3cm}
 
 \color{dd-gray} \textbf{Datenstruktur:} \color{black} 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{figures/caches/arc} 
-\caption{Schema der Datenstruktur von ARC (basierend auf \cite{megiddo2003arc})}
+	\includegraphics[width=0.9\linewidth]{figures/caches/arc} 
+	\caption{Schema der Datenstruktur von ARC (basierend auf \cite{megiddo2003arc})}
 \end{figure} 
 %\color{dd-gray} \textbf{Eigenschaften:} \color{black} 
 %\begin{itemize}
@@ -267,8 +288,17 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 %%	\item Häufig: neues Element wird dem Cache immer hinzugefügt und der Cache kümmert sich einzig und allein um die Verdrängungsstrategie eines Elements
 %%-> Grund: Das managen von meta-daten für Elemente die sich gerade nicht im Cache befinden wäre nicht praktisch...
 %\end{itemize}
+\textbf{Eigenschaften}
+\begin{itemize}
+	\item Scan-Resistant % durch die einteilung in 2 Listen Ähnlich wie bei SLRU
+%	\item Low-Overhead
+	\item Adaptiv (selbstlernend) % Vorteil: keine zusätzlichen Parameter
+	\note{Lernt über fälschlicherweise verdrängte Elemente mit einer Regret-Value} % vergleicht bei einem Cache Miss die Wahrscheinlichkeiten eines Hits in B1 zu einem Hit in B2  
+	% \item Ghost Entries -- Einträge von bereits verdrängte Elemente
+	%	\item Häufig: neues Element wird dem Cache immer hinzugefügt und der Cache kümmert sich einzig und allein um die Verdrängungsstrategie eines Elements
+	%-> Grund: Das managen von meta-daten für Elemente die sich gerade nicht im Cache befinden wäre nicht praktisch...
+\end{itemize}
 \end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \OutlineAtBeginSection
@@ -276,31 +306,45 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 
 % \subsection{Prozess ohne Caching}
 \begin{frame}
-\frametitle{Prozess ohne Caching}
+\frametitle{Feature-Berechnung}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{figures/relatedWorks/FeatureEstimationProcessSimplified.pdf}
-	\caption{Teil des streambasierten Prozesses der Feature-Berechnung}
-	\label{fig:sub3} 
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{figures/relatedWorks/FeatureEstimationProcessSimplifiedBetter.pdf}
+		\caption{Teil des streambasierten Prozesses der Feature-Berechnung}
+	\end{figure}
 \end{figure}
 
 %Es gibt noch weitere Prozessierungsschritte, die hier nicht abgebildet sind (für mehr Informationen hierzu siehe Bachelorarbeit)
 
 \end{frame}
 
-%--- Datenstruktur (Extendable Octree)
+%--- Datenstruktur ("Extendable" Octree)
 
 \begin{frame}
-\frametitle{Extendable Octree}
-\begin{itemize}%[<+->]
-	\item Punkte werden in den Leaf-Nodes (Voxel) des Extendable Octrees abgelegt 
-\end{itemize}
-\begin{figure}
-\centering
-\includegraphics[width=0.3\linewidth]{figures/relatedWorks/voxel_definition.png}
-\caption{Definition eines Voxels (Abbildung aus \cite{Bodenmueller2009})}
-\label{fig:voxel}
+\frametitle{Datenstruktur: Octree}
+
+\begin{figure} 
+	\centering
+	\begin{minipage}{.45\textwidth} 
+		\centering
+		\includegraphics[width=0.2\linewidth]{figures/Octree1}
+		\caption{Definition eines Octrees [Wikipedia]}
+		\label{fig:bunnyOctree}
+	\end{minipage}
+	\centering
+	\begin{minipage}{.45\textwidth} 
+		\centering
+		\includegraphics[width=0.5\linewidth]{figures/bunny/bunny_voxel.png}
+		\caption{Voxel des Datensatzes Bunny}
+		\label{fig:bunnyVoxels}
+	\end{minipage}
+	\label{fig:octree}
 \end{figure}
+
+\begin{itemize}%[<+->]
+	\item Punkte werden in den Leaf-Nodes (Voxel) des Octrees abgelegt 
+\end{itemize}
+
 %\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
 %	\column{.3\textwidth} % Left column and width
 %	% \textbf{Eigenschaften}
@@ -326,10 +370,14 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 \frametitle{Analyse des Speicherbedarfs}
 \begin{figure}
 \centering
-\includegraphics[width=0.7\linewidth]{figures/Benchmark_withoutCaching.png}
-\caption{Speicherbedarf des Extendable Octree (ohne Caching)} %: Reduktionsradius von $r_r$ von 0 (Dichte-Limitierung) und einer Voxel-Auflösung von $1$ statt.
+\includegraphics[width=0.8\linewidth]{figures/Benchmark_withoutCaching.png}
+%\caption{Speicherbedarf des Extendable Octree (ohne Caching)} %: Reduktionsradius von $r_r$ von 0 (Dichte-Limitierung) und einer Voxel-Auflösung von $1$ statt.
 \label{fig:BenchmarkWithoutCaching} 
-\end{figure} 
+\end{figure}
+\vskip0\baselineskip%
+\begin{itemize}
+	\item [$\Rightarrow$] Caching des Inhalts der Leaf-Nodes
+\end{itemize} 
 \end{frame} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -339,11 +387,11 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 
 % \subsection{Prozess mit Caching}
 \begin{frame}
-\frametitle{Prozess mit Caching}
+\frametitle{Erweiterung des Octrees} % mit Caching
 \begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{figures/concepts/CacheConcept2.pdf}
-	\caption{Erweiterung der Feature-Berechnung (Feature-Estimation)}
+	\caption{Erweiterung des Octrees mit Caching}
 	\label{fig:sub4}
 \end{figure}
 \end{frame}
@@ -353,7 +401,13 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 
 \begin{itemize}
 	\item Existierende Caching-Strategien basieren auf Elemente fester Größe
-	\item In dieser Anwendung sind die gecachten Elemente jedoch Voxelinhalte, die sich dynamisch in ihrer Größe verändern
+	{
+		\center 
+		\begin{itemize}
+		\item [] $\Updownarrow$ 
+		\end{itemize}
+	} 
+	\item In dieser Anwendung sind die gecachten Elemente jedoch Voxelinhalte, die sich dynamisch in ihrer Größe verändern 
 \end{itemize}
 \end{frame} 
 
@@ -368,7 +422,7 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 \label{fig:sub5}
 \end{figure}
 \begin{itemize}
-	\item STD: Pro Container-Typ ein zustandsloser Allokator
+%	\item STD: Pro Container-Typ ein zustandsloser Allokator
 	\item EASTL: Pro Container-Instanz ein Allokator
 \end{itemize}
 \end{frame}
@@ -380,25 +434,35 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 \begin{frame}
 	\frametitle{Ergebnisse}
 	\vskip0.25\baselineskip
-	\color{dd-gray} \textbf{Vergleich der Hit-Rate} \color{black}
+	\color{dd-gray} \textbf{Vergleich der Hit-Rate (Dichte-Limitierung)} \color{black}
 
-	\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+	\begin{columns}[T] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
 		\column{.4\textwidth} % Left column and width
 		% \textbf{Eigenschaften}
 		\begin{figure}
 			\centering
+			\begin{center}
+				\caption{Illustration des Datensatzes \emph{Unikirche} (3D-Punktwolke)}
+			\end{center}
 			\includegraphics[width=1\linewidth]{figures/Unikirche2.png}
-			\caption{Illustration des Datensatzes \emph{Unikirche} (3D-Punktwolke)}
 			\label{fig:sub6}
 		\end{figure}
 		\column{.6\textwidth} % Right column and width
 		\begin{figure}
 			\centering
-			\includegraphics[width=0.9\linewidth]{figures/results/DensityLimitationHitRates.png}
-			\caption{Zeigt, dass die Cache-Hit-Rate von LRU besser ist als die von ARC}
+			\begin{center}
+				\caption{Vergleich der Hit-Rate}
+			\end{center}
+			\includegraphics[width=0.7\linewidth]{figures/results/DensityLimitationHitRatesAlternative.png}
+%			\caption{Zeigt, dass die Cache-Hit-Rate von LRU besser ist als die von ARC}
 			\label{fig:sub7}
 		\end{figure}
 	\end{columns}
+
+	\begin{itemize}
+		\item Aufeinanderfolgende Zugriffe auf Voxelinhalte bei Prozessierung sind räumlich sowie zeitlich nah beieinander 
+	\end{itemize}
+
 %	\begin{itemize}
 %	\space
 %	\item Grund für die gute Cache-Hit-Rate:
@@ -413,21 +477,21 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 \begin{frame}
 \frametitle{Ergebnisse}
 \vskip0.25\baselineskip
-\color{dd-gray} \textbf{Vergleich der Swapping-Kosten} \color{black}
+\color{dd-gray} \textbf{Vergleich der Swapping-Kosten (Dichte-Limitierung)} \color{black}
 \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
 	\column{.5\textwidth} % Left column and width
 	% \textbf{Eigenschaften}
 	\begin{figure}
 		\centering
+		\caption{Vergleich der Kosten zum Entladen}
 		\includegraphics[width=1\linewidth]{figures/results/DensityLimitationSwapUnloadCosts.png}
-		\caption{}
 		\label{fig:sub8}
 	\end{figure}
 	\column{.5\textwidth} % Right column and width
 	\begin{figure}
 	\centering
+	\caption{Vergleich der Kosten zum Laden}
 	\includegraphics[width=1\linewidth]{figures/results/DensityLimitationSwapLoadCosts.png}
-	\caption{}
 	\label{fig:sub9}
 	\end{figure}
 \end{columns}
@@ -440,22 +504,34 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 \begin{frame}
 	\frametitle{Zusammenfassung}
 	%%%inhaltlich Folien so zusammenstellen, dass hier mindestens 3 Punkte stehen...
+	\color{dd-gray} \textbf{Umsetzung:} \color{black} 
 	\begin{itemize}
-		\item Auslagern der Voxelinhalte des Extendable Octrees\\(pro Voxelinhalt eine Binärdatei)
+		\item Auslagern der Voxelinhalte des Octrees\\(pro Voxelinhalt eine Binärdatei)
 		\item Identifikation der Voxelinhalte über die Speicheradresse des Leaf-Nodes
 		\item Update-Konzept zur Rückmeldung über den von Voxelinhalten angelegten Speicher
-		\item ARC hat sich als schlechter herausgestellt
-		\item Aufeinanderfolgende Zugriffe auf Voxelinhalte bei der Dichte-Limitierung sowie Feature-Berechnung sind räumlich und zeitlich nah beieinander
+		\vskip1\baselineskip
 	\end{itemize} 
+%%%
+	\color{dd-gray} \textbf{Ergebnisse:} \color{black} 
+	\begin{itemize}
+		\item ARC hat sich als schlechter herausgestellt
+		\item Aufeinanderfolgende Zugriffe auf Voxelinhalte sind räumlich und zeitlich nah beieinander
+	\end{itemize} 
+% note: bei der Dichte-Limitierung sowie Feature-Berechnung 
 \end{frame}
  
  
 % HDF-Format, LIRS, Threading beim Auslagern 
 \begin{frame}
 	\frametitle{Ausblick}
+	\color{dd-gray} \textbf{Serialisierung:} \color{black} 
 	\begin{itemize}
 		\item Verwendung des Dateiformats \emph{Hierarchical Data Format} (HDF)
 		%\item Locking von gecachten Elementen (Lock-Bits)
+	\end{itemize} 
+	\vskip1\baselineskip
+	\color{dd-gray} \textbf{Caching-Strategien:} \color{black} 
+	\begin{itemize}
 		\item LIRS können noch untersucht werden (Metrik: IRR) % evtl sogar besser als LRU; update konzept hier sogar hilfreich!
 		%\item Einsatz von GDSF, um die Swapping-Kosten gering zu halten
 	\end{itemize}
@@ -468,11 +544,17 @@ Verdrängt das Element, auf das in der Vergangenheit am seltensten zugegriffen w
 \nocite{cherkasova1998improving} 
 %------------------------------------------------------------------------------------------
 
-\begin{frame}  % allowframebreaks
-	%\AtBeginBibliography{\small}
+\begin{frame}[allowframebreaks]
 	\frametitle{Referenzen}
+	\tiny
 	\printbibliography[heading=none]
 \end{frame}
+ 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
  
 % \subsection{Testdaten}
 \begin{frame}
