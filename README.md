@@ -18,4 +18,3 @@ diese mit den integrierten Funktionen übersetzen.
 Für die Darstellung zusätzlicher Referenzen ist ein Aufruf des Programms biber nötig.
 
 
-
